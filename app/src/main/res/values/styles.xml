@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TossChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <!-- 기본 배경 -->
+        <item name="chipBackgroundColor">@color/toss_chip_bg</item>
+
+        <!-- 크기 및 패딩 (최소 높이 꼭 필요!) -->
+        <item name="chipMinHeight">30dp</item>
+        <item name="chipCornerRadius">16dp</item>
+        <item name="chipStartPadding">10dp</item>
+        <item name="chipEndPadding">10dp</item>
+
+        <!-- 텍스트 -->
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/toss_chip_text</item>
+
+        <!-- 효과 최소화 (Toss 스타일) -->
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="chipIconVisible">false</item>
+    </style>
+
+    <style name="TossChip.Checked">
+        <item name="chipBackgroundColor">@color/toss_chip_selected_bg</item>
+        <item name="android:textColor">@color/toss_chip_selected_text</item>
+    </style>
+
+
+
+</resources>

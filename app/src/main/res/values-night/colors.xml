@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#121212</color>
+    <color name="card_bg">#1E1E1E</color>
+
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B5B5B5</color>
+    <color name="chip_text">#FFFFFF</color>
+
+    <color name="divider">#333333</color>
+    <color name="red_down">#FF6B6B</color>   <!-- 다크모드 빨간색 약간 밝게 -->
+    <color name="accent">#709CFF</color>
+
+    <color name="toss_chip_bg">#1E1E1E</color>               <!-- 비선택 칩 -->
+    <color name="toss_chip_text">#DDDDDD</color>
+
+    <color name="toss_chip_selected_bg">#355CAD</color>      <!-- 선택 칩 -->
+    <color name="toss_chip_selected_text">#FFFFFF</color>
+
+
+
+    <color name="overlay">#80000000</color>  <!-- 검정 투명 오버레이 -->
+    <color name="button_secondary_bg">#2A2A2A</color>
+
+    <color name="bottomNavBg">#1A1A1A</color>
+    <color name="bottomNavStroke">#333333</color>
+
+
+</resources>

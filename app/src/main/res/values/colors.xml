@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <color name="background">#F6F6F8</color>
+    <color name="card_bg">#FFFFFF</color>
+
+    <color name="text_primary">#111111</color>
+    <color name="text_secondary">#666666</color>
+
+    <color name="divider">#E5E5E5</color>
+    <color name="red_down">#D64545</color>
+    <color name="chip_text">#333333</color>
+
+    <color name="overlay">#80FFFFFF</color>
+    <color name="accent">#4A84FF</color>
+    <color name="button_secondary_bg">#E8F0FE</color>
+
+    <color name="bottomNavBg">#FFFFFF</color>
+    <color name="bottomNavStroke">#EDEDED</color>
+
+    <color name="toss_chip_bg">#E5E7EB</color>
+
+    <color name="toss_chip_selected_bg">#DDE8FF</color>
+
+
+    <color name="toss_chip_text">#4A4A4A</color>
+    <color name="toss_chip_selected_text">#1B64DA</color>
+
+
+
+
+
+    <color name="purple_200">#BB86FC</color>
+    <color name="purple_500">#6200EE</color>
+    <color name="purple_700">#3700B3</color>
+    <color name="teal_200">#03DAC5</color>
+    <color name="teal_700">#018786</color>
+
+
+</resources>
+
