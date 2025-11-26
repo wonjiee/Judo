@@ -43,6 +43,7 @@ public class StockDetailActivity extends AppCompatActivity {
 
     RelativeLayout loadingOverlay;
     TextView textSymbol, textName, textPrice, textChangePercent, textMarketCap, textCategories,textUpdatedAt;
+    TextView textPbr,textPer,textRoe,textDividend,textRevenueGrowth;
     ImageView btnBack,btnFav;
     String symbol;
     StockViewModel vm;
@@ -72,6 +73,13 @@ public class StockDetailActivity extends AppCompatActivity {
         textMarketCap = findViewById(R.id.textMarketCap);
         textCategories = findViewById(R.id.textCategories);
         textUpdatedAt = findViewById(R.id.textUpdatedAt);
+        textPbr = findViewById(R.id.textPbr);
+        textPer = findViewById(R.id.textPer);
+        textRoe = findViewById(R.id.textRoe);
+        textDividend = findViewById(R.id.textDividend);
+        textRevenueGrowth = findViewById(R.id.textRevenueGrowth);
+
+
 
 
         newsList = new ArrayList<>();
@@ -92,8 +100,11 @@ public class StockDetailActivity extends AppCompatActivity {
             String marketCap = intent.getStringExtra("STOCK_MARKET_CAP");
             String categories = intent.getStringExtra("STOCK_CATEGORIES");
             String updatedAt = intent.getStringExtra("STOCK_UPDATEDAT");
-
-
+            double pbr = intent.getDoubleExtra("STOCK_PBR",0.0);
+            double per = intent.getDoubleExtra("STOCK_PER",0.0);
+            double roe = intent.getDoubleExtra("STOCK_ROE",0.0);
+            double dividend = intent.getDoubleExtra("STOCK_DIVIDEND",0.0);
+            double revenueGrowth = intent.getDoubleExtra("STOCK_REVENUEGROWTH",0.0);
 
             textSymbol.setText(symbol);
             textName.setText(name);
@@ -102,8 +113,11 @@ public class StockDetailActivity extends AppCompatActivity {
             textMarketCap.setText(marketCap);
             textCategories.setText(categories);
             textUpdatedAt.setText(updatedAt);
-
-
+            textPbr.setText(String.format("%.2f", pbr));
+            textPer.setText(String.format("%.2f", per));
+            textRoe.setText(String.format("%.2f", roe));
+            textDividend.setText(String.format("%.2f", dividend));
+            textRevenueGrowth.setText(String.format("%.2f", revenueGrowth));
 
             fetchNews(name);
         }

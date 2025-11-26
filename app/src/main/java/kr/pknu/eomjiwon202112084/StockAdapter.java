@@ -132,6 +132,11 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
                         intent.putExtra("STOCK_MARKET_CAP",clickedStock.marketCap);
                         intent.putExtra("STOCK_CATEGORIES",getCategoryText(clickedStock));
                         intent.putExtra("STOCK_UPDATEDAT",formatUpdatedAt(clickedStock.updateAt));
+                        intent.putExtra("STOCK_PBR",clickedStock.pbr);
+                        intent.putExtra("STOCK_PER",clickedStock.per);
+                        intent.putExtra("STOCK_ROE",clickedStock.roe);
+                        intent.putExtra("STOCK_DIVIDEND",clickedStock.dividendYield);
+                        intent.putExtra("STOCK_REVENUEGROWTH",clickedStock.revenueGrowth5Y);
 
                         // 전환 딜레이
                         itemView.postDelayed(() -> {
