@@ -11,5 +11,13 @@
 
     <style name="Theme.StockHelper" parent="Base.Theme.StockHelper" />
 
+    <style name="JUDOTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">true</item> <!-- 아이콘 검정 -->
+    </style>
+
+
+
+
 
 </resources>

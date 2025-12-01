@@ -16,4 +16,11 @@ public class MemoManager {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return pref.getString(symbol, ""); // 없으면 빈 문자열
     }
+
+    public static void clearAllMemos(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        prefs.edit().clear().apply();
+    }
+
+
 }

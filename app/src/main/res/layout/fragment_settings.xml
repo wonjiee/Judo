@@ -131,6 +131,17 @@
                     android:backgroundTint="@color/button_secondary_bg"
                     android:padding="12dp"
                     android:layout_marginTop="12dp"/>
+
+                <Button
+                    android:id="@+id/btnResetFav"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="관심종목 초기화"
+                    android:textSize="15sp"
+                    android:textColor="@color/accent"
+                    android:backgroundTint="@color/button_secondary_bg"
+                    android:padding="12dp"
+                    android:layout_marginTop="12dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

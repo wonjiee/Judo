@@ -25,5 +25,7 @@
     <color name="bottomNavBg">#1A1A1A</color>
     <color name="bottomNavStroke">#333333</color>
 
+    <color name="purple_500">#CE93D8</color>
+
 
 </resources>

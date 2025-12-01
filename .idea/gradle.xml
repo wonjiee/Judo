@@ -6,11 +6,11 @@
       <GradleProjectSettings>
         <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="gradleJvm" value="ms-17" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/../StockHelper 복사본" />
-            <option value="$PROJECT_DIR$/../StockHelper 복사본/app" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
       </GradleProjectSettings>

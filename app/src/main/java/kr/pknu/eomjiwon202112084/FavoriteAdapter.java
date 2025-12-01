@@ -149,14 +149,18 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
                     Intent intent = new Intent(context, StockDetailActivity.class);
 
-                    intent.putExtra("STOCK_SYMBOL", clickedStock.symbol);
-                    intent.putExtra("STOCK_NAME", clickedStock.name);
-                    intent.putExtra("STOCK_PRICE", clickedStock.price);
-                    intent.putExtra("STOCK_CHANGEPERCENT", clickedStock.changePercent);
-                    intent.putExtra("STOCK_MARKET_CAP", clickedStock.marketCap);
-                    intent.putExtra("STOCK_CATEGORIES", getCategoryText(clickedStock));
-                    intent.putExtra("STOCK_UPDATEDAT", formatUpdatedAt(clickedStock.updateAt));
-
+                    intent.putExtra("STOCK_SYMBOL",clickedStock.symbol);
+                    intent.putExtra("STOCK_NAME",clickedStock.name);
+                    intent.putExtra("STOCK_PRICE",clickedStock.price);
+                    intent.putExtra("STOCK_CHANGEPERCENT",clickedStock.changePercent);
+                    intent.putExtra("STOCK_MARKET_CAP",clickedStock.marketCap);
+                    intent.putExtra("STOCK_CATEGORIES",getCategoryText(clickedStock));
+                    intent.putExtra("STOCK_UPDATEDAT",formatUpdatedAt(clickedStock.updateAt));
+                    intent.putExtra("STOCK_PBR",clickedStock.pbr);
+                    intent.putExtra("STOCK_PER",clickedStock.per);
+                    intent.putExtra("STOCK_ROE",clickedStock.roe);
+                    intent.putExtra("STOCK_DIVIDEND",clickedStock.dividendYield);
+                    intent.putExtra("STOCK_REVENUEGROWTH",clickedStock.revenueGrowth5Y);
                     context.startActivity(intent);
                 }
             });

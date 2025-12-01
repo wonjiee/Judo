@@ -74,4 +74,8 @@ public class FavoritesFragment extends Fragment {
             adapter.updateList(favorites);
         }
     }
+
+
+
+
 }

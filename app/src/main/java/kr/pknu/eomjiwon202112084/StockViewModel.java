@@ -25,6 +25,8 @@ public class StockViewModel extends ViewModel {
     private StockRepository repository;
     private Context appContext;
 
+    public boolean isObserved = false;
+
     private boolean isLoaded = false; // 중복 실행 방지
 
     public void init(Context context) {
@@ -112,6 +114,39 @@ public class StockViewModel extends ViewModel {
             Log.e("StockViewModel", "Final fail: " + message);
         }
     }
+
+    public void clearFavoriteStates() {
+        if (stocks.getValue() == null) return;
+
+        List<Stock> updated = new ArrayList<>();
+        for (Stock s : stocks.getValue()) {
+            s.isFavorite = false;
+            updated.add(s);
+        }
+        stocks.postValue(updated); // UI 전체 갱신
+    }
+
+    public void applyFavoriteBackup(List<FavoriteData> backupList) {
+        if (stocks.getValue() == null) return;
+
+        List<Stock> updated = new ArrayList<>(stocks.getValue());
+
+        // 모든 즐겨찾기 초기화 후
+        for (Stock s : updated) s.isFavorite = false;
+
+        // 백업 리스트 기준으로 Favorite 적용
+        for (FavoriteData fav : backupList) {
+            for (Stock s : updated) {
+                if (s.symbol.equalsIgnoreCase(fav.symbol)) {
+                    s.isFavorite = true;
+                }
+            }
+        }
+
+        stocks.postValue(updated); // UI 반영 (즐겨찾기 화면 즉시 갱신)
+    }
+
+
 
 
 }

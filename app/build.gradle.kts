@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "kr.pknu.eomjiwon202112084"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "kr.pknu.eomjiwon202112084"

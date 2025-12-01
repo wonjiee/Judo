@@ -65,7 +65,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Stock item = displayedList.get(position);
 
-        holder.textSymbol.setText(item.symbol);
+        holder.textSymbol.setText((position + 1) + ". "+item.symbol);
         holder.textName.setText(item.name);
         holder.textPrice.setText(item.price);
         holder.textChangePercent.setText(item.changePercent);

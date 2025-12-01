@@ -10,16 +10,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class SettingsFragment extends Fragment {
 
     private Switch switchDarkMode, switchAutoRefresh;
-    private Button btnExportFav, btnImportFav;
+    private Button btnExportFav, btnImportFav,btnResetFav;
     private TextView txtVersion;
 
     private SharedPreferences prefs;
@@ -35,6 +47,7 @@ public class SettingsFragment extends Fragment {
         btnExportFav = v.findViewById(R.id.btnExportFav);
         btnImportFav = v.findViewById(R.id.btnImportFav);
         txtVersion = v.findViewById(R.id.txtAppVersion);
+        btnResetFav = v.findViewById(R.id.btnResetFav);
 
         prefs = requireActivity().getSharedPreferences("settings", Context.MODE_PRIVATE);
 
@@ -75,15 +88,37 @@ public class SettingsFragment extends Fragment {
         });
 
         // 자동 갱신
-        //switchAutoRefresh.setOnCheckedChangeListener((buttonView, isChecked) ->
-        //        prefs.edit().putBoolean("autoRefresh", isChecked).apply()
-        //);
+        switchAutoRefresh.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
+            // 상태 저장
+            prefs.edit().putBoolean("autoRefresh", isChecked).apply();
+
+            // 자동갱신을 켠 순간 즉시 새로고침 실행 (선택 사항)
+            if (isChecked) {
+                if (getActivity() instanceof MainActivity) {
+                    // HomeFragment가 현재 보이는 중이라면 바로 갱신
+                    Fragment f = requireActivity().getSupportFragmentManager().findFragmentById(R.id.mainFragmentContainer);
+                    if (f instanceof HomeFragment) {
+                        ((HomeFragment) f).refreshStockData(); // 네가 쓰는 로딩 함수 이름으로 변경
+                    }
+                }
+            }
+        });
         // 관심종목 내보내기
-        //btnExportFav.setOnClickListener(v -> exportFavorites());
+        btnExportFav.setOnClickListener(v -> exportFavorites());
 
         // 관심종목 가져오기
-        //btnImportFav.setOnClickListener(v -> importFavorites());
+        btnImportFav.setOnClickListener(v -> importFavorites());
+
+        // 관심종목 내보내기
+        btnResetFav.setOnClickListener(v->{
+            FavoriteManager.clearAll(requireContext());
+            StockViewModel vm = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
+            vm.clearFavoriteStates();
+
+
+            Toast.makeText(requireContext(),"관심종목이 모두 삭제되었습니다.",Toast.LENGTH_SHORT).show();
+        });
     }
 
 
@@ -100,57 +135,48 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-    /*관심종목 리스트 JSON으로 내보내기
+    // JSON 내보내기
+    private void exportFavorites(){
+        try{
+            List<FavoriteData> list = FavoriteManager.getFavoritesWithMemos(requireContext());
 
-    private void exportFavorites() {
-        try {
-            ArrayList<String> favList = FavoriteManager.getFavorites(requireContext());
+            File file = new File(requireActivity().getExternalFilesDir(null),"favorites.json");
+            FileWriter writer = new FileWriter(file);
 
-            File file = new File(requireActivity().getExternalFilesDir(null), "favorites.json");
-            JsonWriter writer = new JsonWriter(new FileWriter(file));
-
-            writer.beginArray();
-            for (String symbol : favList) {
-                writer.value(symbol);
-            }
-            writer.endArray();
+            new Gson().toJson(list, writer);
             writer.close();
 
-            Toast.makeText(requireContext(), "내보내기 완료: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(),
+                    "내보내기 완료 → "+file.getAbsolutePath(),
+                    Toast.LENGTH_LONG).show();
 
-        } catch (Exception e) {
-            Toast.makeText(requireContext(), "내보내기 실패: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }catch(Exception e){
+            Toast.makeText(requireContext(),"오류: "+e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 
-    관심종목 JSON 파일 가져오기
-
-    private void importFavorites() {
-        try {
-            File file = new File(requireActivity().getExternalFilesDir(null), "favorites.json");
-            if (!file.exists()) {
-                Toast.makeText(requireContext(), "favorites.json 파일이 없습니다", Toast.LENGTH_SHORT).show();
+    // JSON 가져오기
+    private void importFavorites(){
+        try{
+            File file = new File(requireActivity().getExternalFilesDir(null),"favorites.json");
+            if(!file.exists()){
+                Toast.makeText(requireContext(),"백업 파일이 없습니다",Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            JsonReader reader = new JsonReader(new FileReader(file));
-            reader.beginArray();
-
-            ArrayList<String> favList = new ArrayList<>();
-
-            while (reader.hasNext()) {
-                favList.add(reader.nextString());
-            }
-
-            reader.endArray();
+            FileReader reader = new FileReader(file);
+            Type type = new TypeToken<List<FavoriteData>>(){}.getType();
+            List<FavoriteData> list = new Gson().fromJson(reader, type);
             reader.close();
 
-            FavoriteManager.saveFavorites(requireContext(), favList);
+            FavoriteManager.saveFavoritesWithMemos(requireContext(), list);
+            StockViewModel vm = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
+            vm.applyFavoriteBackup(list);
 
-            Toast.makeText(requireContext(), "관심종목 가져오기 완료!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(),"복원 완료!",Toast.LENGTH_SHORT).show();
 
-        } catch (Exception e) {
-            Toast.makeText(requireContext(), "가져오기 실패: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }catch(Exception e){
+            Toast.makeText(requireContext(),"오류: "+e.getMessage(),Toast.LENGTH_LONG).show();
         }
-    }*/
+    }
 }

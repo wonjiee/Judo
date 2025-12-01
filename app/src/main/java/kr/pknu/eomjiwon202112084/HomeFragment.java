@@ -30,6 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class HomeFragment extends Fragment {
 
@@ -41,6 +43,9 @@ public class HomeFragment extends Fragment {
     Chip chipAll, chipfav, chipValue, chipGrowth, chipBlue, chipDividend;
     Spinner spinnerSort;
     RelativeLayout loadingOverlay;
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,23 +65,54 @@ public class HomeFragment extends Fragment {
         loadingOverlay = v.findViewById(R.id.loadingOverlay);
         loadingOverlay.setVisibility(View.VISIBLE);
 
+
         // RecyclerView 세팅
         adapter = new StockAdapter(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
-        viewModel.getStocks().observe(getViewLifecycleOwner(), stocks -> {
-            adapter.submitList(new ArrayList<>(stocks));
 
-            spinnerSort.post(() -> {
-                adapter.setSortOption(spinnerSort.getSelectedItemPosition());
-                recyclerView.scrollToPosition(0);
+        boolean auto = getAutoRefreshState();
+
+        if (!viewModel.isObserved) {
+            // ⚡ API로 최신 값 로딩 + 저장
+            viewModel.getStocks().observe(getViewLifecycleOwner(), stocks -> {
+                adapter.submitList(new ArrayList<>(stocks));
+                StockBackupManager.save(requireContext(), stocks); //  백업 저장
+                spinnerSort.post(() -> {
+                    adapter.setSortOption(spinnerSort.getSelectedItemPosition());
+                    recyclerView.scrollToPosition(0);
+                    loadingOverlay.setVisibility(View.GONE);
+                });
             });
+            viewModel.init(requireContext());
+            viewModel.isObserved = true;
 
-            loadingOverlay.setVisibility(View.GONE);
-        });
-        viewModel.init(requireContext());
+        } else {
+            // 📁 API 호출하지 않고 캐시만 로드
+            List<Stock> cached = StockBackupManager.load(requireContext());
+            if (cached != null) {
+                adapter.submitList(new ArrayList<>(cached));
+                spinnerSort.post(() -> {
+                    adapter.setSortOption(spinnerSort.getSelectedItemPosition());
+                    recyclerView.scrollToPosition(0);
+                    loadingOverlay.setVisibility(View.GONE);
+                });
+            } else {
+                viewModel.getStocks().observe(getViewLifecycleOwner(), stocks -> {
+                    adapter.submitList(new ArrayList<>(stocks));
+                    StockBackupManager.save(requireContext(), stocks); //  백업 저장
+                    spinnerSort.post(() -> {
+                        adapter.setSortOption(spinnerSort.getSelectedItemPosition());
+                        recyclerView.scrollToPosition(0);
+                        loadingOverlay.setVisibility(View.GONE);
+                    });
+                });
+                viewModel.init(requireContext());
+            }
+        }
+
 
         setupUI(v);
 
@@ -106,7 +142,6 @@ public class HomeFragment extends Fragment {
             }
             return false;
         });
-
 
 
         // 칩 클릭
@@ -139,7 +174,7 @@ public class HomeFragment extends Fragment {
         ArrayAdapter<String> sortAdapter = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_spinner_item,
-                new String[]{ "시총 높은순", "시총 낮은순","가격 높은순", "가격 낮은순"}
+                new String[]{"시총 높은순", "시총 낮은순", "가격 높은순", "가격 낮은순"}
         );
         sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSort.setAdapter(sortAdapter);
@@ -162,6 +197,7 @@ public class HomeFragment extends Fragment {
 
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -181,9 +217,9 @@ public class HomeFragment extends Fragment {
         editTextSearch.clearFocus();
     }
 
-    private void setupUI(@NonNull View view){
-        if(!(view instanceof EditText)){
-            view.setOnTouchListener((v,event)->{
+    private void setupUI(@NonNull View view) {
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener((v, event) -> {
                 hideKeyboard();
 
                 return false;
@@ -195,6 +231,17 @@ public class HomeFragment extends Fragment {
                 setupUI(innerView); // 재귀 호출
             }
         }
+
+    }
+    public void refreshStockData(){
+        loadingOverlay.setVisibility(View.VISIBLE);
+        viewModel.init(requireContext());
+    }
+
+    private boolean getAutoRefreshState(){
+        return requireActivity()
+                .getSharedPreferences("settings", Context.MODE_PRIVATE)
+                .getBoolean("autoRefresh", true); // 기본=ON
     }
 
 }
