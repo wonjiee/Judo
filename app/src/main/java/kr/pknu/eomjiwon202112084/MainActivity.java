@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             if (auto && (now - lastUpdate > INTERVAL)) {
                 vm.init(this);  // ▶ 단 1곳(MainActivity)에서만 API 호출
                 lastUpdate = now;
-                Log.d("AUTO_REFRESH", "🔄 자동 업데이트 실행됨 = " + new Date());
+                Log.d("AUTO_REFRESH", "자동 업데이트 실행됨 = " + new Date());
             }
 
             startAutoRefreshLoop(); // 반복 실행

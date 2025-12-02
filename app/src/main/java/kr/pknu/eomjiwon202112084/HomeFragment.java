@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
         boolean auto = getAutoRefreshState();
 
         if (!viewModel.isObserved) {
-            // ⚡ API로 최신 값 로딩 + 저장
+            // API로 최신 값 로딩 + 저장
             viewModel.getStocks().observe(getViewLifecycleOwner(), stocks -> {
                 adapter.submitList(new ArrayList<>(stocks));
                 StockBackupManager.save(requireContext(), stocks); //  백업 저장
@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment {
             viewModel.isObserved = true;
 
         } else {
-            // 📁 API 호출하지 않고 캐시만 로드
+            // API 호출하지 않고 캐시만 로드
             List<Stock> cached = StockBackupManager.load(requireContext());
             if (cached != null) {
                 adapter.submitList(new ArrayList<>(cached));

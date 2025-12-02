@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/background"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <!-- ===== Header (고정) ===== -->
@@ -12,20 +12,20 @@
         android:id="@+id/titleGlossary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
         android:text="용어 사전"
         android:textColor="@color/text_primary"
         android:textSize="26sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="6dp" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/subTitleGlossary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
         android:text="투자 지표들을 쉽게 이해해보세요"
         android:textColor="@color/text_secondary"
-        android:textSize="14sp"
-        android:layout_marginBottom="18dp" />
+        android:textSize="14sp" />
 
     <!-- ===== 내용만 스크롤 ===== -->
     <ScrollView
@@ -330,7 +330,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="내재가치 대비 주가가 낮아 저평가된 기업입니다.\n일반적으로 PER·PBR이 낮고 실적이 안정적입니다.\n\n앱 기준: PER↓, PBR↓, 안정적 실적"
+                        android:text="내재가치 대비 주가가 낮아 저평가된 기업입니다.\n일반적으로 PER·PBR이 낮고 실적이 안정적입니다.\n\n앱 기준: 낮은 PER·PBR, 안정적 ROE"
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -363,7 +363,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="매출과 이익이 빠르게 성장하는 기업입니다.\n높은 PER도 미래 성장 기대감으로 정당화될 수 있습니다.\n\n앱 기준: 5년 매출 성장률↑, 실적 증가세↑"
+                        android:text="매출과 이익이 빠르게 성장하는 기업입니다.\n미래 기대가 커서 변동성이 높을 수 있습니다.\n\n앱 기준: 높은 매출 성장률, 높은 ROE"
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -396,7 +396,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="안정적인 현금흐름을 기반으로 꾸준히 배당을 지급하는 기업입니다.\n변동성이 낮아 장기 투자에 적합합니다.\n\n앱 기준: Dividend Yield↑(일정 기준 이상)"
+                        android:text="안정적인 이익을 바탕으로\n꾸준히 배당을 지급하는 기업입니다.\n장기 투자에 적합합니다.\n\n앱 기준: 높은 배당수익률, 안정적 ROE"
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -429,7 +429,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="시가총액이 크고 실적·브랜드·재무 안정성이 뛰어난 대형 기업입니다.\n\n앱 기준: 시가총액 상위 기업군"
+                        android:text="규모가 크고 수익성이 안정적인\n대형 기업입니다.\n시장 변동에 비교적 강합니다.\n\n앱 기준: 높은 시가총액, 높은 ROE"
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>

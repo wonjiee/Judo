@@ -17,6 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+// 초기 버전. 현재 사용 안함
 public class StockRepository {
 
     private Context context;

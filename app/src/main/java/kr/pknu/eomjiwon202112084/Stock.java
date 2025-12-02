@@ -114,11 +114,11 @@ public class Stock {
         // 성장주
         isGrowth =
                 (revenueGrowth5Y > 15) &&
-                        (per > 20);
+                        (roe > 10);
 
 
         // 배당주
-        isDividend = (dividendYield > 0.025);   // 2.5% 이상
+        isDividend = (dividendYield > 0.025) && (roe > 8);;   // 2.5% 이상
 
 
         // 우량주 (수익성 + 안정성 + 성장성)
